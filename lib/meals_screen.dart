@@ -1,65 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/providers/meals_provider.dart';
 import 'package:meals_app/widgets/meals_item.dart';
+import 'package:provider/provider.dart';
 
-class MealScreen extends StatefulWidget {
-  List<Meal> mealsData;
-
-  MealScreen(this.mealsData);
-
-  @override
-  _MealScreenState createState() => _MealScreenState();
-}
-
-class _MealScreenState extends State<MealScreen> {
-  String title;
-  List<Meal> mealsList;
-  var isChangedDependenices = false;
-
-  @override
-  void didChangeDependencies() {
-    if (!isChangedDependenices) {
-      final args =
-          ModalRoute.of(context).settings.arguments as Map<String, String>;
-      title = args['title'];
-      final id = args['id'];
-      mealsList = widget.mealsData.where((mealData) {
-        return mealData.categories.contains(id);
-      }).toList();
-      isChangedDependenices = true;
-    }
-    super.didChangeDependencies();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void removeItem(String id) {
-    print(id);
-    setState(() {
-      mealsList.removeWhere((test) => test.id == id);
-    });
-  }
-
+class MealScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context).settings.arguments as Map<String, String>;
+    final mealsList =
+        Provider.of<MealsProvider>(context).getMealsByCategoryId(args['id']);
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(title),
+        title: Text(args['title']),
+        actions: <Widget>[
+          PopupMenuButton(
+            onSelected: (int value) {
+              if (value == 0) {
+              } else {}
+            },
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                child: Text('Only Fav'),
+                value: 1,
+              ),
+              PopupMenuItem(
+                child: Text('Show All'),
+                value: 0,
+              ),
+            ],
+          )
+        ],
       ),
       body: ListView.builder(
           itemCount: mealsList.length,
           itemBuilder: (ctx, index) {
-            return MealItem(
-              id: mealsList[index].id,
-              title: mealsList[index].title,
-              imageUrl: mealsList[index].imageUrl,
-              duration: mealsList[index].duration,
-              complexity: mealsList[index].complexity,
-              affordability: mealsList[index].affordability);
+            return ChangeNotifierProvider.value(
+                value: mealsList[index], child: MealItem());
           }),
     );
   }

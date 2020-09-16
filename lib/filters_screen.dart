@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 
 class FiltersScreen extends StatefulWidget {
   static String routeName = 'filters_screen';
-  final Function setFilters;
-  Map<String,bool> filters;
-
-  FiltersScreen(this.filters,this.setFilters);
+ /* final Function setFilters;
+  Map<String,bool> filters;*/
 
   @override
   _FiltersScreenState createState() => _FiltersScreenState();
@@ -28,8 +26,8 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
   @override
   void initState() {
-    isVeg=widget.filters['veg'];
-    isSugerFree=widget.filters['sugar_free'];
+    /*isVeg=widget.filters['veg'];
+    isSugerFree=widget.filters['sugar_free'];*/
     super.initState();
   }
   @override
@@ -46,7 +44,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
                 'veg':isVeg,
                 'sugar_free':isSugerFree,
               };
-              widget.setFilters(selectedFilter);
+              //widget.setFilters(selectedFilter);
               Navigator.of(context).pop();
             } ,
           )

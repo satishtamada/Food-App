@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/categroy_screen.dart';
 import 'package:meals_app/drawer_screen.dart';
 import 'package:meals_app/favorite_screen.dart';
-import 'package:meals_app/models/meal.dart';
 
 class TabsScreen extends StatefulWidget {
-  List<Meal> favMeals;
-
-  TabsScreen(this.favMeals);
+  TabsScreen();
 
   @override
   _TabsScreenState createState() => _TabsScreenState();
@@ -26,7 +23,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   void initState() {
-    pages = [CategoryScreen(), FavoriteScreen(widget.favMeals)];
+    pages = [CategoryScreen(), FavoriteScreen()];
     super.initState();
   }
 
@@ -36,6 +33,16 @@ class _TabsScreenState extends State<TabsScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Food App'),
+        actions: selectedIndex == 1
+            ? <Widget>[]
+            : <Widget>[
+                IconButton(
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
       ),
       drawer: Drawer(
         child: DrawerScreen(),

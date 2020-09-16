@@ -1,7 +1,7 @@
 import 'package:meals_app/models/meal.dart';
 
 const DUMMY_MEALS = const [
-  Meal(
+  /*Meal(
     id: 'm1',
     categories: [
       'c1',
@@ -33,8 +33,7 @@ const DUMMY_MEALS = const [
     isGlutenFree: false,
     isVegan: true,
     isVegetarian: true,
-    isLactoseFree: true,
-  ),
+    isLactoseFree: true,),
   Meal(
     id: 'm2',
     categories: [
@@ -348,5 +347,5 @@ const DUMMY_MEALS = const [
     isVegan: true,
     isVegetarian: true,
     isLactoseFree: true,
-  ),
+  ),*/
 ];
