@@ -4,7 +4,9 @@ import 'package:meals_app/providers/meal.dart';
 import 'package:provider/provider.dart';
 
 class MealItem extends StatelessWidget {
-  MealItem();
+  bool isFromFav = false;
+
+  MealItem(this.isFromFav);
 
   void selectedMeal(BuildContext ctx, Meal meal) {
     Navigator.of(ctx)
@@ -64,21 +66,24 @@ class MealItem extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Positioned(
-                    top: 20,
-                    right: 10,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: IconButton(
-                          icon: Icon(
-                            meal.isFav ? Icons.favorite : Icons.favorite_border,
-                            color: Colors.pinkAccent,
-                          ),
-                          onPressed: () {
-                            meal.toggleFav();
-                          }),
+                  if (!isFromFav)
+                    Positioned(
+                      top: 20,
+                      right: 10,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: IconButton(
+                            icon: Icon(
+                              meal.isFav
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.pinkAccent,
+                            ),
+                            onPressed: () {
+                              meal.toggleFav();
+                            }),
+                      ),
                     ),
-                  ),
                   Positioned(
                     bottom: 20,
                     right: 10,

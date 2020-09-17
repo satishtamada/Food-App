@@ -40,7 +40,7 @@ class MealScreen extends StatelessWidget {
           itemCount: mealsList.length,
           itemBuilder: (ctx, index) {
             return ChangeNotifierProvider.value(
-                value: mealsList[index], child: MealItem());
+                value: mealsList[index], child: MealItem(false));
           }),
     );
   }

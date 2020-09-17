@@ -371,6 +371,12 @@ class MealsProvider with ChangeNotifier {
     }).toList();
   }
 
+  List<Meal> getFavMeals() {
+    return _items.where((mealData) {
+      return mealData.isFav==true;
+    }).toList();
+  }
+
   void showAll() {
     isShowFav = false;
   }
