@@ -1,4 +1,4 @@
-import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/providers/meal.dart';
 
 const DUMMY_MEALS = const [
   /*Meal(

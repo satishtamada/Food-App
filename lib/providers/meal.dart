@@ -27,6 +27,7 @@ class Meal with ChangeNotifier {
   final bool isVegan;
   final bool isVegetarian;
   bool isFav;
+  final double price;
 
   Meal({
     @required this.id,
@@ -42,7 +43,8 @@ class Meal with ChangeNotifier {
     @required this.isLactoseFree,
     @required this.isVegan,
     @required this.isVegetarian,
-    this.isFav=false
+    this.isFav=false,
+    @required this.price,
   });
 
   void toggleFav(){

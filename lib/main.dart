@@ -1,16 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:meals_app/cart_screen.dart';
 import 'package:meals_app/categroy_screen.dart';
 import 'package:meals_app/meal_details_screen.dart';
 import 'package:meals_app/meals_screen.dart';
 import 'package:meals_app/models/data/meals_data.dart';
+import 'package:meals_app/providers/cart.dart';
 import 'package:meals_app/providers/meals_provider.dart';
 import 'package:meals_app/settings_screen.dart';
 import 'package:meals_app/tabs_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'filters_screen.dart';
-import 'models/meal.dart';
+import 'providers/meal.dart';
 
 void main() => runApp(HomeApp());
 
@@ -54,10 +56,15 @@ class _HomeAppState extends State<HomeApp> {
     return favMeals.any((test) => test.id == mealId);
   }*/
 
+
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => MealsProvider(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (ctx) => MealsProvider()),
+        ChangeNotifierProvider(create: (ctx) => Cart()),
+      ],
       child: MaterialApp(
         title: 'Meals App',
         initialRoute: '/',
@@ -68,6 +75,7 @@ class _HomeAppState extends State<HomeApp> {
               MealDetailScreen(),
           SettingsScreen.routeName: (ctx) => SettingsScreen(),
           FiltersScreen.routeName: (ctx) => FiltersScreen(),
+          CartScreen.routeName: (ctx) => CartScreen(),
         },
         theme: ThemeData(
             primarySwatch: Colors.pink,

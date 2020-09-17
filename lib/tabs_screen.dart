@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/cart_screen.dart';
 import 'package:meals_app/categroy_screen.dart';
 import 'package:meals_app/drawer_screen.dart';
 import 'package:meals_app/favorite_screen.dart';
+import 'package:meals_app/providers/cart.dart';
+import 'package:meals_app/widgets/badge.dart';
+import 'package:provider/provider.dart';
 
 class TabsScreen extends StatefulWidget {
   TabsScreen();
@@ -36,12 +40,20 @@ class _TabsScreenState extends State<TabsScreen> {
         actions: selectedIndex == 1
             ? <Widget>[]
             : <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.shopping_cart,
-                    color: Colors.white,
+                Consumer<Cart>(
+                  builder: (_, cart, ch) => Badge(
+                    child: ch,
+                    value: cart.itemCount.toString(),
                   ),
-                ),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.shopping_cart,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(CartScreen.routeName);
+                    },
+                  ),
+                )
               ],
       ),
       drawer: Drawer(
