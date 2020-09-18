@@ -5,6 +5,7 @@ import 'package:meals_app/widgets/meals_item.dart';
 import 'package:provider/provider.dart';
 
 class MealScreen extends StatelessWidget {
+  static final String routeName='/meal_screen';
   @override
   Widget build(BuildContext context) {
     final args =

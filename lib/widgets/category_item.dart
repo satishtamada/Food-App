@@ -12,7 +12,7 @@ class CategoryItem extends StatelessWidget {
     /*  Navigator.of(ctx).push(MaterialPageRoute(builder: (_) {
       return MealScreen(id,title);
     }));*/
-    Navigator.of(ctx).pushNamed('meals', arguments: {'id': id, 'title': title});
+    Navigator.of(ctx).pushNamed(MealScreen.routeName, arguments: {'id': id, 'title': title});
   }
 
   @override

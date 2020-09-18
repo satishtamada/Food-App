@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/login_screen.dart';
 import 'package:meals_app/tabs_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -51,6 +52,9 @@ class WelcomeScreen extends StatelessWidget {
                         'Login',
                         style: TextStyle(color: Colors.white),
                       ),
+                      onPressed: (){
+                        Navigator.of(context).pushNamed(LoginScreen.routeName);
+                      },
                     ),
                     Container(
                       width: 1,

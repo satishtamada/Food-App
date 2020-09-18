@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:meals_app/cart_screen.dart';
 import 'package:meals_app/categroy_screen.dart';
+import 'package:meals_app/login_screen.dart';
 import 'package:meals_app/meal_details_screen.dart';
 import 'package:meals_app/meals_screen.dart';
 import 'package:meals_app/models/data/meals_data.dart';
@@ -57,8 +58,6 @@ class _HomeAppState extends State<HomeApp> {
     return favMeals.any((test) => test.id == mealId);
   }*/
 
-
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -71,13 +70,13 @@ class _HomeAppState extends State<HomeApp> {
         initialRoute: WelcomeScreen.routeName,
         routes: {
           TabsScreen.routeName: (ctx) => TabsScreen(),
-          'meals': (ctx) => MealScreen(),
-          MealDetailScreen.routeName: (ctx) =>
-              MealDetailScreen(),
+          MealScreen.routeName: (ctx) => MealScreen(),
+          MealDetailScreen.routeName: (ctx) => MealDetailScreen(),
           SettingsScreen.routeName: (ctx) => SettingsScreen(),
           FiltersScreen.routeName: (ctx) => FiltersScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
           WelcomeScreen.routeName: (ctx) => WelcomeScreen(),
+          LoginScreen.routeName: (ctx) => LoginScreen(),
         },
         theme: ThemeData(
             primarySwatch: Colors.pink,
