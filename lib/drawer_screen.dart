@@ -47,11 +47,34 @@ class DrawerScreen extends StatelessWidget {
             getListItem('Home', Icons.home, () {
               Navigator.of(context).popAndPushNamed('/');
             }),
-            getListItem('Settings', Icons.settings, () {
-              Navigator.of(context).popAndPushNamed(SettingsScreen.routeName);
-            }),
             getListItem('Filters', Icons.filter_list, () {
               Navigator.of(context).popAndPushNamed(FiltersScreen.routeName);
+            }),
+            getListItem('Logout', Icons.power_settings_new, () {
+              Navigator.of(context).pop();
+              showDialog(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                        title: Text('Logout from device..?'),
+                        content: Text(
+                            'Are you really want to logout from the device.'),
+                        actions: <Widget>[
+                          FlatButton(
+                            child: Text('Yes'),
+                            onPressed: () {
+                              Navigator.of(ctx).pop(true);
+                            },
+                          ),
+                          FlatButton(
+                            child: Text('No'),
+                            onPressed: () => Navigator.of(ctx).pop(),
+                          )
+                        ],
+                      )).then((onValue) {
+                if (onValue) {
+                  //TODO logout
+                }
+              });
             }),
           ],
         ));

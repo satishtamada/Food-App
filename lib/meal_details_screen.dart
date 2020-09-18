@@ -54,90 +54,96 @@ class MealDetailScreen extends StatelessWidget {
           )
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          Flexible(
-            flex: 1,
-            child: SingleChildScrollView(
-              child: Column(
+      body: Builder(
+          builder: (context) => Column(
                 children: <Widget>[
-                  Image.network(
-                    selectedMeal.imageUrl,
-                    width: double.infinity,
-                    height: 250,
-                    fit: BoxFit.cover,
+                  Flexible(
+                    flex: 1,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: <Widget>[
+                          Image.network(
+                            selectedMeal.imageUrl,
+                            width: double.infinity,
+                            height: 250,
+                            fit: BoxFit.cover,
+                          ),
+                          getTitles(context, "Ingredients"),
+                          Container(
+                            decoration: BoxDecoration(color: Colors.white),
+                            height: 200,
+                            width: 300,
+                            padding: EdgeInsets.all(8),
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            child: ListView.builder(
+                                itemCount: selectedMeal.ingredients.length,
+                                itemBuilder: (ctx, index) => Card(
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        child: Text(
+                                            selectedMeal.ingredients[index]),
+                                      ),
+                                    )),
+                          ),
+                          getTitles(context, "Steps"),
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(color: Colors.white),
+                            height: 200,
+                            width: 300,
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                            child: ListView.builder(
+                                itemCount: selectedMeal.steps.length,
+                                itemBuilder: (ctx, index) => ListTile(
+                                      leading: CircleAvatar(
+                                        maxRadius: 10,
+                                        child: Text('${index + 1}'),
+                                      ),
+                                      title: Container(
+                                        child: Text(selectedMeal.steps[index]),
+                                      ),
+                                    )),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  getTitles(context, "Ingredients"),
                   Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 200,
-                    width: 300,
-                    padding: EdgeInsets.all(8),
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    child: ListView.builder(
-                        itemCount: selectedMeal.ingredients.length,
-                        itemBuilder: (ctx, index) => Card(
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                child: Text(selectedMeal.ingredients[index]),
-                              ),
-                            )),
-                  ),
-                  getTitles(context, "Steps"),
-                  Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 200,
-                    width: 300,
-                    margin: EdgeInsets.symmetric(vertical: 10),
-                    child: ListView.builder(
-                        itemCount: selectedMeal.steps.length,
-                        itemBuilder: (ctx, index) => ListTile(
-                              leading: CircleAvatar(
-                                maxRadius: 10,
-                                child: Text('${index + 1}'),
-                              ),
-                              title: Container(
-                                child: Text(selectedMeal.steps[index]),
-                              ),
-                            )),
-                  ),
+                    margin: EdgeInsets.all(5),
+                    color: Colors.orange,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text(
+                            'Buy Now',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Container(
+                          width: 1,
+                          height: 30,
+                          color: Colors.white,
+                        ),
+                        FlatButton(
+                          onPressed: () {
+                            cart.addItem(selectedMeal.id, selectedMeal.price,
+                                selectedMeal.title, selectedMeal.imageUrl);
+                            Scaffold.of(context).showSnackBar(SnackBar(
+                              content: Text('Added item to cart'),
+                              duration: Duration(seconds: 1),
+                            ));
+                          },
+                          child: Text(
+                            'Add cart',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
                 ],
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.all(5),
-            color: Colors.orange,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                FlatButton(
-                  child: Text(
-                    'Buy Now',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                Container(
-                  width: 1,
-                  height: 30,
-                  color: Colors.white,
-                ),
-                FlatButton(
-                  onPressed: () {
-                    cart.addItem(selectedMeal.id, selectedMeal.price,
-                        selectedMeal.title,selectedMeal.imageUrl);
-                  },
-                  child: Text(
-                    'Add cart',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
+              )),
     );
   }
 }

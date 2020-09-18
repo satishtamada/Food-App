@@ -9,6 +9,7 @@ import 'package:meals_app/providers/cart.dart';
 import 'package:meals_app/providers/meals_provider.dart';
 import 'package:meals_app/settings_screen.dart';
 import 'package:meals_app/tabs_screen.dart';
+import 'package:meals_app/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'filters_screen.dart';
@@ -67,15 +68,16 @@ class _HomeAppState extends State<HomeApp> {
       ],
       child: MaterialApp(
         title: 'Meals App',
-        initialRoute: '/',
+        initialRoute: WelcomeScreen.routeName,
         routes: {
-          '/': (ctx) => TabsScreen(),
+          TabsScreen.routeName: (ctx) => TabsScreen(),
           'meals': (ctx) => MealScreen(),
           MealDetailScreen.routeName: (ctx) =>
               MealDetailScreen(),
           SettingsScreen.routeName: (ctx) => SettingsScreen(),
           FiltersScreen.routeName: (ctx) => FiltersScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
+          WelcomeScreen.routeName: (ctx) => WelcomeScreen(),
         },
         theme: ThemeData(
             primarySwatch: Colors.pink,

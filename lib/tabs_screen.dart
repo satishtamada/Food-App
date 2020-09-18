@@ -8,6 +8,7 @@ import 'package:meals_app/widgets/badge.dart';
 import 'package:provider/provider.dart';
 
 class TabsScreen extends StatefulWidget {
+   static final String routeName='/tabSceen';
   TabsScreen();
 
   @override
