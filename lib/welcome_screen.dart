@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/login_screen.dart';
+import 'package:meals_app/register_screen.dart';
 import 'package:meals_app/tabs_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -62,7 +63,9 @@ class WelcomeScreen extends StatelessWidget {
                       color: Colors.white,
                     ),
                     FlatButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(RegisterScreen.routeName);
+                      },
                       child: Text(
                         'Register',
                         style: TextStyle(color: Colors.white),
