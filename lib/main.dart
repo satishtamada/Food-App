@@ -9,6 +9,7 @@ import 'package:meals_app/models/data/meals_data.dart';
 import 'package:meals_app/providers/cart.dart';
 import 'package:meals_app/providers/meals_provider.dart';
 import 'package:meals_app/providers/user.dart';
+import 'package:meals_app/providers/users_list.dart';
 import 'package:meals_app/register_screen.dart';
 import 'package:meals_app/settings_screen.dart';
 import 'package:meals_app/tabs_screen.dart';
@@ -67,6 +68,7 @@ class _HomeAppState extends State<HomeApp> {
         ChangeNotifierProvider(create: (ctx) => MealsProvider()),
         ChangeNotifierProvider(create: (ctx) => Cart()),
         ChangeNotifierProvider(create: (ctx) => User()),
+        ChangeNotifierProvider(create: (ctx) => UsersList()),
       ],
       child: MaterialApp(
         title: 'Meals App',

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meals_app/providers/user.dart';
+import 'package:meals_app/providers/users_list.dart';
+import 'package:meals_app/tabs_screen.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   static final String routeName = '/register_screen';
@@ -22,11 +25,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.dispose();
   }
 
-  void _doLogin() {
+  void _doRegister() {
     final _validate = _form.currentState.validate();
     if (_validate) {
       _form.currentState.save();
-      print(_userData.userName);
+      bool isAdded = Provider.of<UsersList>(context).addUser(_userData);
+      if (isAdded) {
+        Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
+      } else {
+
+      }
+      print(Provider.of<UsersList>(context).items.length.toString());
       print(_userData.userId);
       print(_userData.userPassword);
     }
@@ -123,7 +132,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   onPressed: () {
-                    _doLogin();
+                    _doRegister();
                   },
                 ),
               )
