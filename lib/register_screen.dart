@@ -13,7 +13,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
-  final _userData = User(userId: null, userName: '', userPassword: '');
+  var _userData = User(userId: null, userName: '', userPassword: '');
 
   @override
   void dispose() {
@@ -23,7 +23,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _doLogin() {
-    _form.currentState.save();
+    final _validate = _form.currentState.validate();
+    if (_validate) {
+      _form.currentState.save();
+      print(_userData.userName);
+      print(_userData.userId);
+      print(_userData.userPassword);
+    }
+  }
+
+  bool validateEmail(String input) {
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(input);
+    return emailValid;
   }
 
   @override
@@ -40,31 +53,66 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
-                decoration: InputDecoration(labelText: 'User name'),
+                decoration: InputDecoration(
+                    labelText: 'User name',
+                    errorStyle: TextStyle(color: Colors.red)),
                 textInputAction: TextInputAction.next,
                 maxLines: 1,
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_emailFocusNode);
                 },
-                onSaved: (value) {},
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Email'),
-                textInputAction: TextInputAction.next,
-                maxLines: 1,
-                keyboardType: TextInputType.emailAddress,
-                focusNode: _emailFocusNode,
-                onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_passwordFocusNode);
+                validator: (value) {
+                  if (value.trim().isEmpty) {
+                    return 'Please enter user name';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _userData = User(
+                      userName: value,
+                      userId: _userData.userId,
+                      userPassword: _userData.userPassword);
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Password'),
-                textInputAction: TextInputAction.next,
-                maxLines: 1,
-                obscureText: true,
-                focusNode: _passwordFocusNode,
-              ),
+                  decoration: InputDecoration(labelText: 'Email'),
+                  textInputAction: TextInputAction.next,
+                  maxLines: 1,
+                  keyboardType: TextInputType.emailAddress,
+                  focusNode: _emailFocusNode,
+                  onFieldSubmitted: (_) {
+                    FocusScope.of(context).requestFocus(_passwordFocusNode);
+                  },
+                  validator: (value) {
+                    if (!validateEmail(value)) {
+                      return 'Please enter valid email';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _userData = User(
+                        userName: _userData.userName,
+                        userId: value,
+                        userPassword: _userData.userPassword);
+                  }),
+              TextFormField(
+                  decoration: InputDecoration(labelText: 'Password'),
+                  textInputAction: TextInputAction.next,
+                  maxLines: 1,
+                  obscureText: true,
+                  focusNode: _passwordFocusNode,
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) {
+                    _userData = User(
+                        userName: _userData.userName,
+                        userId: _userData.userId,
+                        userPassword: value);
+                  }),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10),
                 child: RaisedButton(
