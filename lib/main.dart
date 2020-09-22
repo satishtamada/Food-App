@@ -6,6 +6,7 @@ import 'package:meals_app/login_screen.dart';
 import 'package:meals_app/meal_details_screen.dart';
 import 'package:meals_app/meals_screen.dart';
 import 'package:meals_app/models/data/meals_data.dart';
+import 'package:meals_app/profile_screen.dart';
 import 'package:meals_app/providers/cart.dart';
 import 'package:meals_app/providers/meals_provider.dart';
 import 'package:meals_app/providers/user.dart';
@@ -83,6 +84,7 @@ class _HomeAppState extends State<HomeApp> {
           WelcomeScreen.routeName: (ctx) => WelcomeScreen(),
           LoginScreen.routeName: (ctx) => LoginScreen(),
           RegisterScreen.routeName: (ctx) => RegisterScreen(),
+          ProfileScreen.routeName: (ctx) => ProfileScreen(),
         },
         theme: ThemeData(
             primarySwatch: Colors.pink,

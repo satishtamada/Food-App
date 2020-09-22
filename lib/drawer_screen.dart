@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:meals_app/filters_screen.dart';
+import 'package:meals_app/profile_screen.dart';
+import 'package:meals_app/providers/user.dart';
 import 'package:meals_app/settings_screen.dart';
+import 'package:provider/provider.dart';
 
 class DrawerScreen extends StatelessWidget {
   Widget getListItem(String title, IconData iconData, Function function) {
@@ -13,6 +17,7 @@ class DrawerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
     return Container(
         color: Colors.white,
         child: Column(
@@ -21,19 +26,21 @@ class DrawerScreen extends StatelessWidget {
               height: 120,
               width: double.infinity,
               color: Colors.pink,
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               margin: EdgeInsets.symmetric(vertical: 30),
               padding: EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  Icon(
-                    Icons.restaurant,
+                  IconButton(icon:Icon(
+                    Icons.supervised_user_circle,
                     color: Colors.white,
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
+                    size: 40,
+                  ) ,onPressed: (){
+                    Navigator.of(context).pushNamed(ProfileScreen.routeName);
+                  },)
+                  ,
                   Text(
                     'Meal App',
                     style: TextStyle(

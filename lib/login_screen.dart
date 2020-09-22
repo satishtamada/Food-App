@@ -1,6 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:meals_app/providers/user.dart';
+import 'package:meals_app/providers/users_list.dart';
+import 'package:meals_app/tabs_screen.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static final String routeName = '/login_screen';
@@ -11,8 +14,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _passwordFocusNode = FocusNode();
-  final _form=GlobalKey<FormState>();
-  final _userData=User(userId: null,userName: '',userPassword: '');
+  final _form = GlobalKey<FormState>();
+  var _userData = User(
+    userId: null,
+    userName: '',
+    userPassword: '',
+  );
 
   @override
   void dispose() {
@@ -21,7 +28,30 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _doLogin() {
-    _form.currentState.save();
+    final _validate = _form.currentState.validate();
+    if (_validate) {
+      _form.currentState.save();
+      bool isLoggedIn = Provider.of<UsersList>(context).doLogin(_userData);
+      if (isLoggedIn) {
+        Navigator.of(context).pushReplacementNamed(TabsScreen.routeName);
+      } else {
+        Fluttertoast.showToast(
+            msg: "Not registered ..!",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+    }
+  }
+
+  bool validateEmail(String input) {
+    bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+        .hasMatch(input);
+    return emailValid;
   }
 
   @override
@@ -44,8 +74,17 @@ class _LoginScreenState extends State<LoginScreen> {
                 onFieldSubmitted: (_) {
                   FocusScope.of(context).requestFocus(_passwordFocusNode);
                 },
-                onSaved: (value){
-
+                validator: (value) {
+                  if (value.isEmpty || !validateEmail(value)) {
+                    return 'Please enter valid email';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _userData = User(
+                      userName: value,
+                      userId: _userData.userId,
+                      userPassword: _userData.userPassword);
                 },
               ),
               TextFormField(
@@ -54,6 +93,18 @@ class _LoginScreenState extends State<LoginScreen> {
                 maxLines: 1,
                 obscureText: true,
                 focusNode: _passwordFocusNode,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _userData = User(
+                      userName: _userData.userName,
+                      userId: _userData.userId,
+                      userPassword: value);
+                },
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10),

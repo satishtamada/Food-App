@@ -30,7 +30,7 @@ class WelcomeScreen extends StatelessWidget {
                 child: Column(
                   children: <Widget>[
                     Icon(
-                      Icons.restaurant,
+                      Icons.fastfood,
                       size: 100,
                       color: Colors.grey,
                     ),
