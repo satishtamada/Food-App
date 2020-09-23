@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:meals_app/cart_screen.dart';
 import 'package:meals_app/categroy_screen.dart';
 import 'package:meals_app/login_screen.dart';
+import 'package:meals_app/mapview_screen.dart';
 import 'package:meals_app/meal_details_screen.dart';
 import 'package:meals_app/meals_screen.dart';
 import 'package:meals_app/models/data/meals_data.dart';
@@ -85,6 +86,7 @@ class _HomeAppState extends State<HomeApp> {
           LoginScreen.routeName: (ctx) => LoginScreen(),
           RegisterScreen.routeName: (ctx) => RegisterScreen(),
           ProfileScreen.routeName: (ctx) => ProfileScreen(),
+          MapScreen.routeName: (ctx) => MapScreen(),
         },
         theme: ThemeData(
             primarySwatch: Colors.pink,

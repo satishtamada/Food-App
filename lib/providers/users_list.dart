@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:meals_app/helpers/db_helper.dart';
 import 'package:meals_app/providers/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:meals_app/utils/constants.dart';
@@ -14,7 +16,8 @@ class UsersList with ChangeNotifier {
   }
 
   Future<void> addUser(User inputUser) {
-    http.post(Constants.baseUrl + Constants.USERS,
+    http
+        .post(Constants.baseUrl + Constants.USERS,
             body: json.encode({
               'userId': inputUser.userId,
               'userName': inputUser.userName,
@@ -49,5 +52,16 @@ class UsersList with ChangeNotifier {
       }
       return false;
     }
+  }
+
+  void addProfileImage(
+    String pickedTitle,
+    File pickedImage,
+  ) {
+    DBHelper.insert('user_image', {
+      'id': DateTime.now().toString(),
+      'title': pickedTitle,
+      'image': pickedImage.path,
+    });
   }
 }

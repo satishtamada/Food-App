@@ -5,6 +5,10 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 
 class CustomImagePicker extends StatefulWidget {
+  final Function savedImageFile;
+
+  CustomImagePicker(this.savedImageFile);
+
   @override
   _ImagePickerState createState() => _ImagePickerState();
 }
@@ -17,12 +21,16 @@ class _ImagePickerState extends State<CustomImagePicker> {
       source: ImageSource.camera,
       maxWidth: 600,
     );
+    if (imageFile == null) {
+      return;
+    }
     setState(() {
       _storedImage = imageFile;
     });
     final appDir = await syspaths.getApplicationDocumentsDirectory();
     final fileName = path.basename(imageFile.path);
     final savedImage = await imageFile.copy('${appDir.path}/$fileName');
+    widget.savedImageFile(savedImage);
   }
 
   @override
@@ -51,13 +59,10 @@ class _ImagePickerState extends State<CustomImagePicker> {
                 ),
           alignment: Alignment.center,
         ),
-        SizedBox(
-          width: 10,
-        ),
         Container(
           child: FlatButton.icon(
-            icon: Icon(Icons.camera),
-            label: Text('Take Picture'),
+            icon: Icon(Icons.camera_alt),
+            label: Text('Change Profile'),
             textColor: Theme.of(context).primaryColor,
             onPressed: _takePicture,
           ),
